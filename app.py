@@ -114,7 +114,7 @@ ACCESS = {
 }
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'nsempf_users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -235,6 +235,13 @@ def logout():
 
 ################ GUEST ACCESS FUNCTIONALITY OR GREATER ###################
 
+# library
+@app.route('/library')
+@requires_access_level(ACCESS['user'])
+def libraryG():
+    return render_template('library.html', pageTitle='My Flask App Dashboard')
+
+# account
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
@@ -264,9 +271,20 @@ def account():
 @requires_access_level(ACCESS['user'])
 def dashboard():
     return render_template('dashboard.html', pageTitle='My Flask App Dashboard')
+# database
+@app.route('/database')
+@requires_access_level(ACCESS['user'])
+def datab():
+    return render_template('database.html', pageTitle='My Flask App Dashboard')
 
 
 ################ ADMIN ACCESS FUNCTIONALITY ###################
+
+
+@app.route('/posts')
+@requires_access_level(ACCESS['admin'])
+def postspage():
+    return render_template('posts.html', pageTitle='My Flask App Dashboard')
 
 # control panel
 @app.route('/control_panel')
