@@ -9,10 +9,17 @@ from flask_login import LoginManager, UserMixin, current_user, login_user, logou
 from functools import wraps
 
 import pymysql
-import secrets
+#import secrets
+import os
+
+dbuser = os.environ.get('DBUSER')
+dbpass = os.environ.get('DBPASS')
+dbhost = os.environ.get('DBHOST')
+dbname = os.environ.get('DBNAME')
 
 
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+# conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
 # Open database connection
 #dbhost = secrets.dbhost
@@ -20,7 +27,7 @@ conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, 
 #dbpass = secrets.dbpass
 #dbname = secrets.dbname
 
-#db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
+# db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
 
 app = Flask(__name__)
 
@@ -31,7 +38,7 @@ login.login_message_category = 'danger' # sets flash category for the default me
 
 app.config['SECRET_KEY']='SuperSecretKey'
 # import os
-# = os.environ.get('SECRET_KEY')
+# dbuser = os.environ.get('SECRET_KEY')
 
 
 # Prevent --> pymysql.err.OperationalError) (2006, "MySQL server has gone away (BrokenPipeError(32, 'Broken pipe')
