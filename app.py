@@ -242,11 +242,6 @@ def logout():
 
 ################ GUEST ACCESS FUNCTIONALITY OR GREATER ###################
 
-# library
-@app.route('/library')
-@requires_access_level(ACCESS['user'])
-def libraryG():
-    return render_template('library.html', pageTitle='My Flask App Dashboard')
 
 # account
 @app.route('/account', methods=['GET', 'POST'])
@@ -269,6 +264,11 @@ def account():
 
     return render_template('account_detail.html', form=form, pageTitle='Your Account')
 
+#library
+@app.route('/library')
+@requires_access_level(ACCESS['user'])
+def libraryG():
+    return render_template('library.html', pageTitle='My Flask App Dashboard')
 
 
 ################ USER ACCESS FUNCTIONALITY OR GREATER ###################
