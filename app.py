@@ -266,7 +266,7 @@ def account():
 
 #library
 @app.route('/library')
-@requires_access_level(ACCESS['user'])
+@requires_access_level(ACCESS['guest'])
 def libraryG():
     return render_template('library.html', pageTitle='My Flask App Dashboard')
 
