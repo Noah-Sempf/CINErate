@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Login</h1>
-<form action="" method="POST" novalidate>
+
+
+<form class="box" action="" method="POST" novalidate style="width: 500px; padding: 40px; position: absolute; text-align: center; transform: translate(-50%, -50%); top: 33%; left: 50%; background-color:rgb(150, 150, 156); border-radius: 8%;">
   {{ form.hidden_tag() }}
-  
-  <div class="form-group">
+  <h1 style="text-align: center;">CINErate Login</h1>
+
+  <div class="form-group" style="border: 0; display: block; margin: 20px auto; text-align: center;">
     <label>{{ form.username.label }}</label>
     {{ form.username(size=32, class="form-control") }}
     {% for error in form.username.errors %}
@@ -13,7 +15,7 @@
     {% endfor %}
   </div>
 
-  <div class="form-group">
+  <div class="form-group" style="border: 0; display: block; margin: 20px auto; text-align: center; ">
     <label>{{ form.password.label }}</label>
     {{ form.password(size=32, class="form-control") }}
     {% for error in form.password.errors %}
@@ -22,6 +24,7 @@
   </div>
 
   <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-  <p>{{ form.submit(class="btn btn-primary") }}</p>
+  <p style="border-radius: 24px;">{{ form.submit(class="btn btn-primary") }}</p>
 </form>
+
 {% endblock %}

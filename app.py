@@ -58,7 +58,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Login')
 
 
 class RegistrationForm(FlaskForm):
@@ -266,7 +266,6 @@ def account():
 
 #library
 @app.route('/library')
-@requires_access_level(ACCESS['guest'])
 def libraryG():
     return render_template('library.html', pageTitle='My Flask App Dashboard')
 

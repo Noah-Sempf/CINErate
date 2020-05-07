@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>Register</h1>
   {% from "includes/_formhelpers.html" import render_field %}
-  <form action="" method="POST">
+  <form action="" method="POST" style="width: 550px; padding: 40px; position: absolute; text-align: center; transform: translate(-50%, -50%); top: 45%; left: 50%; background-color:rgb(150, 150, 156); border-radius: 8%;">
     {{ form.hidden_tag() }}
-    
+    <h1>Register</h1>
     <div class="form-group">
         <label>{{ form.name.label }}</label>
         {{ form.name(size=32, class="form-control") }}
