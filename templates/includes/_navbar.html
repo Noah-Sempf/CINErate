@@ -8,56 +8,48 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-            <a class="navbar-brand" href="/">CINErate</a>
-
+            <a class="navbar-brand" href="/" style="margin: 0; padding: 0;"><img src="/static/css/images/CINErateLOGOTrand.png" style="height: 60px; width: 100px;"/></a>
+            <div style="color: white; padding-left: 15px; font-size: 2rem; font-family: 'Oswald', sans-serif;">CINErate</div>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
+                
+                    <form class="form-inline" style="padding-left: 10px;" >
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" >
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                 
             </ul>
 
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 {% if current_user.is_anonymous%}
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/login">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/library">Library</a>
-                </li>
+                
 
                 {% else %}
 
                 {% if current_user.is_admin() %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/control_panel">Control Panel</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/posts">Post</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/control_panel">Control Panel</a>
                 </li>
                 {% endif %}
 
                 {% if current_user.is_admin() or current_user.is_user() %}
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/database">Database</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/library">Library</a>
                 </li>
                 {% endif %}
-
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="/library">Library</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/account">Account</a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/account">Account</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" style="font-family: 'Oswald', sans-serif;" href="/logout">Logout</a>
                 </li>
 
                 {% endif %}
