@@ -1,4 +1,5 @@
-CINErate
+
+
 CINErate is made to a home for film reviews adn information.
 
 CINErate offers the user to view and look information created by the owner of the site me.
