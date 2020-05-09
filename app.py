@@ -1,12 +1,17 @@
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, DateField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from flask_sqlalchemy import SQLAlchemy as _BaseSQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 from functools import wraps
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
+
+#import secrets
+
 
 import pymysql
 import secrets
@@ -112,7 +117,6 @@ class AccountDetailForm(FlaskForm):
     email = StringField('Email: ', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
-
 
 ACCESS = {
     'guest': 0,
@@ -371,8 +375,82 @@ def new_user():
 
     return render_template('new_user.html',  pageTitle='New User | My Flask App', form=form)
 
+#####################################################################
+#####################################################################
+#####################################################################
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        results = nsempf_moviedbs.query.filter(or_(nsempf_moviedbs.Movie_name.like(search),
+                                                    nsempf_moviedbs.LeadActor.like(search),
+                                                    nsempf_moviedbs.Release_date.like(search),
+                                                    nsempf_moviedbs.Director.like(search)).all())
+        return render_template('library.html', movies=results, pageTitle='CINErate', legend="Search Results")
+    else:
+        return redirect('/')
+
+@app.route('/add_movie', methods=['GET', 'POST'])
+def add_movie():
+    form = MovieForm()
+    if form.validate_on_submit():
+        Movie = nsempf_moviedbs(Movie_name=form.Movie_name.data, Movie_rating=form.Movie_rating.data, LeadActor=form.LeadActor.data, Release_date=form.Release_date.data, Director=form.Director.data, Description=form.Description.data, Trivia=form.Trivia.data)
+        db.session.add(Movie)
+        db.session.commit()
+
+        return redirect('/library')
+ 
+    return render_template('database.html', form=form, pageTitle='CINErate')
+
+@app.route('/delete_movie/<int:MovieID>', methods=['GET','POST'])
+def delete_movie(MovieID):
+    if request.method == 'POST':
+        Movie = nsempf_moviedbs.query.get_or_404(MovieID)
+        db.session.delete(Movie)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/")
+
+
+@app.route('/movie/<int:MovieID>', methods=['GET','POST'])
+def get_movie(MovieID):
+    Movie = nsempf_moviedbs.query.get_or_404(MovieID)
+    return render_template('posts.html', form=Movie, pageTitle='Movie Details', legend="Movie Details")
+
+
+@app.route('/movie/<int:MovieID>/update', methods=['GET', 'POST'])
+def update_movie(MovieID):
+    Movie = nsempf_moviedbs.query.get_or_404(MovieID)
+    form = MovieForm()
+
+    if form.validate_on_submit():
+        Movie.Movie_name = form.Movie_name.data
+        Movie.Movie_rating = form.Movie_rating.data
+        Movie.LeadActor = form.LeadActor.data
+        Movie.Release_date = form.Release_date.data
+        Movie.Dircetor = form.Director.data
+        Movie.Description = form.Description.data
+        Movie.Trivia = form.Trivia.data
+        db.session.commit()
+        return redirect(url_for('get_movie', MovieID=Movie.MovieID))
+    form.MovieID.data = Movie.MovieID
+    form.Movie_name.data = Movie.Movie_name
+    form.Movie_rating.data = Movie.Movie_rating
+    form.LeadActor.data = Movie.LeadActor
+    form.Release_date.data = Movie.Release_date
+    form.Director.data = Movie.Dircetor
+    form.Description.data = Movie.Description
+    form.Trivia.data = Movie.Trivia
+    return render_template('about.html', form=form, pageTitle='Update Movie', legend="Update a movie")
 
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

@@ -2,7 +2,42 @@
 
 {% block body %}
 
-	<h1>Post to main page</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div>
+	<h2> Ratings </h2>
 
+	<table class="table table-hover">
+		<thead>
+		  <tr>
+			<th scope="col">Movie</th>
+			<th scope="col">Rating</th>
+			<th scope="col">Lead Actor's name</th>
+			<th scope="col">Release Date</th>
+			<th scope="col">Director</th>
+			<th scope="col">Description</th>
+			<th scope="col">Trivia</th>
+		  </tr>
+		</thead>
+		<tbody>
+			{% for row in movies %}
+			<tr>
+				<td> {{ row.Movie_name }}</td>
+				<td> {{ row.Movie_rating }}</td>
+				<td> {{ row.LeadActor }}</td>
+				<td> {{ row.Release_date }}</td>
+				<td> {{ row.Director }}</td>
+				<td> {{ row.Description }}</td>
+				<td> {{ row.Trivia }}</td>
+
+				<td>
+					<form action="{{ url_for('get_movie', MovieID=row.MovieID) }}" Method="POST">						
+						<button type="submit" class="btn btn-outline-dark">Details</button>
+					</form>
+				</td>
+				
+			</tr>
+			{% endfor %}
+		</tbody>
+	  </table>
+   
+</div>
 {% endblock %}

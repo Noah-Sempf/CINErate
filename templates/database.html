@@ -2,7 +2,22 @@
 
 {% block body %}
 
-	<h1>Film Database</h1>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div>
+    
+    <h3>Add a new movie</h3>
+   
+    <form method="POST" action="{{ url_for('add_movie') }}">
 
+        {{ form.csrf_token }}
+        <input class="form-control" type="text" placeholder="Movie Title" {{ form.Movie_name(size=20) }}>
+        <input class="form-control" type="text" placeholder="Movie Rating" {{ form.Movie_rating(size=10) }}>
+        <input class="form-control" type="text" placeholder="Lead Actor's name" {{ form.LeadActor(size=20) }}>
+		<input class="form-control" type="text" placeholder="Release Date" {{ form.Release_date(size=20) }}>
+		<input class="form-control" type="text" placeholder="Director" {{ form.Director(size=20) }}>
+		<input class="form-control" type="text" placeholder="Description" {{ form.Description(size=20) }}> 
+		<input class="form-control" type="text" placeholder="Trivia" {{ form.Trivia(size=20) }}>   
+
+        <button type="submit" class="btn btn-outline-dark">Add Movie</button>
+    </form>
+</div>
 {% endblock %}
